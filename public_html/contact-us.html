@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+     
+    <head>
+        <meta charset="utf-8">
+        <title>Cumulus</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+	    <link rel="icon" href="images/favicon.png" type="image/png"/>
+    	<link rel="shortcut icon" href="images/favicon.png" type="image/png"/>
+
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
+
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/templatemo_style.css">
+        <link rel="stylesheet" href="css/templatemo_misc.css">
+        <link rel="stylesheet" href="css/flexslider.css">
+        <link rel="stylesheet" href="css/testimonails-slider.css">
+
+        <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
+        
+        <script language=javascript>
+    var egainChat  = egainChat  || {};
+        /*eGain Chat server */
+        egainChat.serverURL = "http://eceweb.cc.com/system";
+        /*eGain Chat Entry Point*/
+        egainChat.EntryPointId  = "1001";
+        /*eGain Chat Locale*/
+        egainChat.Locale  = "en-US";
+        /*eGain template name*/
+        egainChat.Template = "aqua";
+        /*Set to true to enable posting attributes to templates*/
+        egainChat.PostChatAttributes = false;
+        egainChat.CustomerContextParameters = {};
+        egainChat.openHelp = function () {
+        var domainRegex = /^((?:https?:\/\/)?(?:www\.)?([^\/]+))/i;
+        try {
+            if (egainChat.eglvchathandle != null && egainChat.eglvchathandle.closed == false) 
+            {
+                    egainChat.eglvchathandle.focus();
+                    return;
+            }
+        }
+        catch (err) {
+        }
+        var refererName = "";
+        refererName = encodeURIComponent(refererName);
+        var refererurl = encodeURIComponent(document.location.href);
+        var hashIndex = refererurl.lastIndexOf('#');
+        if (hashIndex != -1) {
+            refererurl = refererurl.substring(0, hashIndex);
+        }
+        var eglvcaseid = (/eglvcaseid=[0-9]*/gi).exec(window.location.search);
+        var vhtIds = '';
+        if (typeof EGAINCLOUD != 'undefined' && EGAINCLOUD.Account.getAllIds)
+        {
+            var ids = EGAINCLOUD.Account.getAllIds();
+            vhtIds = '&aId=' + ids.a + '&sId=' + ids.s + '&uId=' + ids.u;
+        }
+        var EG_CALL_Q = window.EG_CALL_Q || [];
+        EG_CALL_Q.push(['enableTracker', true]);
+        var eGainChatUrl = egainChat.serverURL + '/templates/chat/' + egainChat.Template + '/index.html?subActivity=Chat&entryPointId=' + egainChat.EntryPointId;
+
+        eGainChatUrl += '' + '&templateName=' + egainChat.Template + '&locale=' + egainChat.Locale + '&ver=v11';
+        eGainChatUrl += '&postChatAttributes=' + egainChat.PostChatAttributes + '&eglvrefname=' + refererName + '&' + eglvcaseid + vhtIds;
+
+        var domain = domainRegex.exec(eGainChatUrl)[0];
+
+        if ((eGainChatUrl + refererurl).length <= 2000)
+            eGainChatUrl += '&referer=' + refererurl;
+        var params = 'height=650,width=450,resizable=yes,scrollbars=yes,toolbar=no';
+
+        if (egainChat.PostChatAttributes) {
+            window.addEventListener('message', function (event) {
+                    try{
+                            var message = JSON.parse(event.data);
+                            if (event.origin === domain && message.Caller.indexOf('EGLV_DOCK') !== -1) {
+                                    if (message.Key === 'EgainChatParameter') {
+
+                                            var response = {
+                                                    value: egainChat.CustomerContextParameters,
+                                                    caller: message.Caller
+                                            };
+                                            event.source.postMessage(JSON.stringify(response), event.origin);
+                                    }
+                            }
+                    }catch(e){
+                    }	
+            });
+        }
+        egainChat.eglvchathandle = window.open(eGainChatUrl, '', params);
+        };
+        /*To be called by client website. All the parameters specified in application-chat-defaults must be set here.*/
+        egainChat.SetCustomerParameters = function (egainAttributeName, attributeValue) {
+            egainChat.CustomerContextParameters[egainAttributeName] = attributeValue;
+        };
+    </script>
+    
+    </head>
+    <body>
+
+            <header>
+                <div id="top-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="home-account">
+                                    <a href="#"> </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="main-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="logo">
+                                    <a href="#"><img src="images/logo.jpg" title="Cumulus" alt="Cumulus" ></a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="main-menu">
+                                    <ul>
+                                        <li><a href="index.html">Home</a></li>
+                                        <li><a href="about-us.html">About</a></li>
+                                        <li><a href="products.html">Products</a></li>
+                                        <li><a href="contact-us.html">Contact</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="search-box">  
+                                    <form name="search_form" method="get" class="search_form">
+                                        <input id="search" type="text" />
+                                        <input type="submit" id="search-button" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div id="heading">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-content">
+                                <h2>Contact Us</h2>
+                                <span>Home / <a href="contact-us.html">Contact Us</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="product-post">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Feel free to send a message</h2>
+                                <img src="images/under-heading.png" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div id="contact-us">
+                        <div class="container">
+                            <div class="row">
+                                <div class="product-item col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8">  
+                                            <div class="message-form">
+                                                <form action="jsp/email.jsp" method="post" class="send-message">
+                                                    <div class="row">
+                                                    <div class="name col-md-4">
+                                                        <input type="text" name="name" id="name" placeholder="Name" />
+                                                    </div>
+                                                    <div class="email col-md-4">
+                                                        <input type="text" name="email" id="email" placeholder="Email" />
+                                                    </div>
+                                                    <div class="subject col-md-4">
+                                                        <input type="text" name="subject" id="subject" placeholder="Subject" />
+                                                    </div>
+                                                    </div>
+                                                    <div class="row">        
+                                                        <div class="text col-md-12">
+                                                            <textarea name="text" placeholder="Message"></textarea>
+                                                        </div>   
+                                                    </div>                              
+                                                    <div class="send">
+                                                        <button type="submit">Send</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="info">
+                                                <p>Please select an option to get in contact with us. </p>
+                                                <ul>
+                                                    <li><i class="fa fa-phone"></i>+1 (408) 526-4000</li>
+                                                    <li><i class="fa fa-globe"></i>170 West Tasman Dr., San Jose, CA</li>
+                                                    <li><i class="fa fa-envelope"></i><a href="#">Email Us</a></li>
+                                                    <li><i class="fa fa-comment-o"></i><a href="#" onClick="egainChat.openHelp()" style=cursor:hand>Chat With Us</a> </li>
+                                                </ul>
+                                            </div>
+                                        </div>     
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-section">
+                                <h2>Find Us On Map</h2>
+                                <img src="images/under-heading.png" alt="" >
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="googleMap" style="height:420px;"></div>
+                        </div>
+                    </div>     
+                </div>
+            </div>
+
+			<footer>
+                <div class="container">
+                    <div class="top-footer">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="subscribe-form">
+                                    <span>Get in touch with us</span>
+                                    <form method="get" class="subscribeForm">
+                                        <input id="subscribe" type="text" />
+                                        <input type="submit" id="submitButton" />
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="social-bottom">
+                                    <span>Follow us:</span>
+                                    <ul>
+                                        <li><a href="#" class="fa fa-facebook"></a></li>
+                                        <li><a href="#" class="fa fa-twitter"></a></li>
+                                        <!--
+                                        <li><a href="#" class="fa fa-rss"></a></li>
+                                        --!>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="main-footer">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="about">
+                                    <h4 class="footer-title">About Cumulus</h4>
+                                    <p>Cumulus is a multinational company headquartered in California. We are involved in many businesses operating in different countries at the same time. We have offices and employees spread over the globe and we produce or sells goods of different nature.
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="shop-list">
+                                    <h4 class="footer-title">Customer Care Products</h4>
+                                    <ul>
+                                        <li><a href="http://www.cisco.com/c/en/us/products/customer-collaboration/packaged-contact-center-enterprise/index.html"><i class="fa fa-angle-right"></i>Cisco Contact Center Enterprise</a></li>
+                                        <li><a href="http://www.cisco.com/c/en/us/products/customer-collaboration/unified-contact-center-express/index.html"><i class="fa fa-angle-right"></i>Cisco Contact Center Express</a></li>
+                                        <li><a href="https://www.ciscospark.com/sparkcare.html"><i class="fa fa-angle-right"></i>Cisco Spark Care</a></li>
+                                        <li><a href="http://www.cisco.com/c/en/us/products/customer-collaboration/finesse/index.html"><i class="fa fa-angle-right"></i>Cisco Finesse</a></li>
+                                        <li><a href="http://www.cisco.com/c/en/us/products/customer-collaboration/unified-intelligence-center/index.html"><i class="fa fa-angle-right"></i>Cisco Unified Intelligence Center</a></li>
+                                        <li><a href="http://www.cisco.com/c/en/us/products/customer-collaboration/remote-expert-mobile/index.html"><i class="fa fa-angle-right"></i>Cisco Remote Expert Mobile</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="recent-posts">
+                                    <h4 class="footer-title">Recent Posts</h4>
+                                    <div class="recent-post">
+                                        <div class="recent-post-thumb">
+                                            <img src="images/recent-post1.jpg" alt="">
+                                        </div>
+                                        <div class="recent-post-info">
+                                            <h6><a href="https://www.ciscospark.com">Cisco Spark</a></h6>
+                                        </div>
+                                    </div>
+                                    <div class="recent-post">
+                                        <div class="recent-post-thumb">
+                                            <img src="images/recent-post2.jpg" alt="">
+                                        </div>
+                                        <div class="recent-post-info">
+                                            <h6><a href="https://www.ciscospark.com/sparkcare.html">Cisco Spark Care</a></h6>
+                                        </div>
+                                    </div>
+                                    <div class="recent-post">
+                                        <div class="recent-post-thumb">
+                                            <img src="images/recent-post3.jpg" alt="">
+                                        </div>
+                                        <div class="recent-post-info">
+                                            <h6><a href="http://www.cisco.com/c/dam/en/us/products/customer-collaboration/unified-contact-center-enterprise/stronger-customer-relationships.pdf">The Omnichannel Experience</a></h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="more-info">
+                                    <h4 class="footer-title">About Cisco</h4>
+                                    <p>Cisco is the worldwide leader in IT that helps companies seize the opportunities of tomorrow by proving that amazing things can happen when you connect the previously unconnected. At Cisco customers come first and an integral part of our DNA is creating long-lasting customer partnerships and working with them to identify their needs and provide solutions that support their success.</p>
+                                    <ul>
+                                        <li><i class="fa fa-phone"></i>+1 (408) 526-4000</li>
+                                        <li><i class="fa fa-globe"></i>170 West Tasman Dr., San Jose, CA</li>
+                                        <li><i class="fa fa-envelope"></i><a href="#">info@cc.com</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom-footer">
+                        <p>Copyright © 2017 - <a href="#">Cisco Systems, Inc.</a></p>
+                    </div>
+                    <div>
+						<p><a href="#">The Fine Print...</a><br>Cumulus obviously is not a real company. It was created to demonstrate CCBU's Customer Care User Experiences as they evolve and grow. All stories and pictures were borrowed from different web sites and owners have no idea their great products are being used to help us share our vision of awesome Customer Care.</p>
+ 						<br>
+                    </div>                   
+                </div>
+            </footer>
+
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script src="js/vendor/jquery.gmap3.min.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDPRyTrLw1tzRWR761gBCcmXoj7u4nRKxY&amp;sensor=false">
+        </script>
+                
+        <script>
+		
+		var map;
+		
+        function initialize()
+        {
+			var map_options = {
+			  center: new google.maps.LatLng(37.4084425,-121.9561531),
+			  zoom: 16,
+			  mapTypeId:google.maps.MapTypeId.ROADMAP
+			  };
+			var map = new google.maps.Map(document.getElementById("googleMap"), map_options);
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+		google.maps.event.addDomListener(window, "resize", function() 
+		{
+		 	var center = map.getCenter();
+		 	google.maps.event.trigger(map, "resize");
+		 	map.setCenter(center); 
+		});
+        </script>
+
+    </body>
+</html>

@@ -1,0 +1,235 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 18-Sep-2017, 5:56:07 AM
+    Author     : Frank
+*/
+.chat-box
+{
+    width: 300px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-family: arial;
+}
+
+.header
+{
+    padding: 10px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border-color: #4c9900;
+    border-style: solid;
+    background-color: #ffffff;
+/*    background-color: #6d84b4;*/
+}
+
+.messages
+{
+    padding: 10px;
+    height: 400px;
+    background-color: green;
+    background-color: rgb(237, 239, 244);
+    border-width: 4px;
+    border-color: #4c9900;
+    border-style: solid;
+    overflow-y: scroll;
+}
+
+.messages ul
+{
+    padding: 0px;
+    list-style-type: none;
+}
+
+.messages ul li
+{
+    height: auto;
+    margin-bottom: 10px;
+    clear: both;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.messages ul li span
+{
+    display: inline-block;
+    max-width: 200px;
+    background-color: white;
+    padding: 5px;
+    border-radius: 4px;
+    position: relative;
+    border-width: 1px;
+    border-style: solid;
+    border-color: grey;
+}
+.messages ul li span.left
+{
+    float: left;
+    
+}
+
+.messages ul li span.systemmsg-chat
+{
+    float: left;
+    background-color: #ffff00;
+}
+.messages ul li span.left-chat
+{
+    float: left;
+    background-color: #E4FCEF;
+}
+
+.messages ul li span.left:after
+{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -8.5px;
+    top: 7px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid white;
+}
+
+.messages ul li span.left:before
+{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -9px;
+    top: 7px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid black;
+}
+.messages ul li span.systemmsg-chat:after
+{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -8.5px;
+    top: 7px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #ffff00;
+}
+
+.messages ul li span.systemmsg-chat:before
+{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -9px;
+    top: 7px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid black;
+}
+
+
+
+.messages ul li span.left-chat:after
+{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -8.5px;
+    top: 7px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid #E4FCEF;
+}
+
+.messages ul li span.left-chat:before
+{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    left: -9px;
+    top: 7px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid black;
+}
+.messages ul li span.right:after
+{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    right: -8px;
+    top: 6px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid #dbedfe;
+}
+
+.messages ul li span.right:before
+{
+    content: "";
+    display: inline-block;
+    position: absolute;
+    right: -9px;
+    top: 6px;
+    height: 0px;
+    width: 0px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 8px solid black;
+}
+
+.messages ul li span.right
+{
+    float: right;
+    background-color: #dbedfe;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.input-box
+{
+    background-color: white;
+    height: 40px;
+    padding: 0px;
+    border-width: 4px;
+    border-color: #4c9900;
+    border-style: solid;
+}
+
+.input-box textarea
+{
+    padding: 10px;
+    width: 288px;
+    height: 150px;
+    display: inline-block;
+    outline: 0px;
+    border-width: 4px;
+    resize: none;
+    border-width: 4px;
+    border-color: #4c9900;
+    border-style: solid;
+    font-size: 12px;
+    padding: 0px;
+    border-top-width: 2px;
+}

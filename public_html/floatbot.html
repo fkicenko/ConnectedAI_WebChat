@@ -1,0 +1,303 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Cumulus Finance</title>
+        <link rel="stylesheet" href="css/bot.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        
+        <script src="js/jquery/jquery-2.1.3.min.js" type="text/javascript"></script>
+        <script src="js/jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>   
+        <script src="js/egain/egain-client-library.0.0.25.min.js" type="text/javascript"></script>
+        <script src="js/jquery-cookie/jquery.cookie.js" type="text/javascript"></script>        
+        <script src="js/with-input-parameters.js" type="text/javascript"></script>
+	<script type="text/javascript">
+        // API.ai Parameters    
+        var accessToken = "1c4d3b458b3f4109bec0b38f792cfc46";
+        var baseUrl = "https://api.api.ai/v1/";
+        // ECE Parameters
+        var ChatEntryPointId = "1001";
+        var PhoneNumber = "";
+        var EmailAddress = "michael.littlefoot@cc.com";
+        var FirstName = "Michael";
+        var LastName = "Littlefoot";
+        // InChat = ECE Chat escalation
+        var InChat = false;
+        // Default Messaging
+        var messageCouldntHear = "I couldn't hear you, could you say that again?",
+        messageInternalError = "Oh no, there has been an internal server error",
+        messageSorry = "I'm sorry, I don't have the answer to that yet.";
+        var messageRecording = "Recording...";
+        // Main window for navigation
+        var navWindow;
+        var sparkCareWindow;
+        $(document).ready(function() 
+        {
+
+            $("#input").keypress(function(event) {
+                if (event.which == 13) 
+                {
+                    alert("Pressed Enter!");
+                    event.preventDefault();
+                    if($("#input").val() == "goodbye" && InChat == true)
+                    {
+                        myChat.End();
+                        $("#input").val("Goodbye!")
+                        InChat = false;
+                    }
+                    $('#messages ul').append( '<li><span class="right">' + $("#input").val() + '</span><div class="clear"></div></li>');
+                    if(InChat == true)
+                    {
+                        myChat.SendMessageToAgent($('#input').val());
+                        temp['Inbound' + ' Chat' + chatIndex++] = $('#input').val();
+                        myTranscript.push(temp);
+                        alert("Transcript: " + myTranscript[0]['Inbound Chat']);
+                        $("#input").val("");
+                        //document.getElementById('messages').scrollIntoView(true);
+                    }
+                    else
+                    {
+                        temp['Inbound' + ' Bot' + botIndex++] = $('#input').val();
+                        myTranscript.push(temp);
+                        alert("Transcript: " + myTranscript[0]['Inbound Bot1']);
+                        send();
+                        $("#input").val("");
+                    }
+                }
+            });
+            $("#rec").click(function(event) {
+                switchRecognition();
+                imagePath = $("#rec").attr("src");
+                if(imagePath === "images/microphone_green.png")
+                {
+                    $("#rec").attr("src", "images/microphone_red.png");
+                }
+            });
+        });
+        var recognition;
+        function startRecognition() {
+            recognition = new webkitSpeechRecognition();
+            recognition.onstart = function(event) {
+                updateRec();
+            };
+            recognition.onresult = function(event) {
+                var text = "";
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    text += event.results[i][0].transcript;
+                }
+                setInput(text);
+                stopRecognition();
+            };
+            recognition.onend = function() {
+                stopRecognition();
+            };
+            recognition.lang = "en-US";
+            recognition.start();
+        }
+
+        function stopRecognition() {
+            if (recognition) {
+                recognition.stop();
+                recognition = null;
+            }
+            updateRec();
+        }
+        function switchRecognition() {
+                if (recognition) {
+                    stopRecognition();
+                } else {
+                    startRecognition();
+                }
+        }
+        function setInput(text) {
+                $("#input").text(text);
+                $('#messages ul').append( '<li><span class="right">' + text + '</span><div class="clear"></div></li>');
+                //document.getElementById('messages').scrollIntoView(true);
+                send();
+                $("#input").val("");
+        }
+        function updateRec() {
+                $("#rec").text(recognition ? "Stop" : "Speak");
+                
+        }
+        function send() {
+                var text = $("#input").val();
+                $("#rec").attr("src", "images/microphone_green.png");
+                $.ajax({
+                        type: "POST",
+                        url: baseUrl + "query?v=20170910",
+                        contentType: "application/json; charset=utf-8",
+                        dataType: "json",
+                        headers: {
+                                "Authorization": "Bearer " + accessToken
+                        },
+                        data: JSON.stringify({ q: text, lang: "en", sessionId: "346d2f0c-60b9-470c-a7ed-6ca53c5cd7d4"}),
+                        success: function(data) {
+                                //setResponse(JSON.stringify(data, undefined, 2));
+                                prepareResponse(data);
+                        },
+                        error: function() {
+                                respond(messageInternalError);
+                        }
+                });
+                setResponse("Loading...");
+        }
+        function prepareResponse(val) {
+            var debugJSON = JSON.stringify(val, undefined, 2);
+            var spokenResponse = val.result.fulfillment.speech;
+            // Here we are determining some actions to take based on the Bot interpretation
+            if(spokenResponse === "escalate")
+            {
+                respond("One moment, I am now transferring you to a specialist!");
+                escalateIt();
+            }
+            else if(spokenResponse === "calculator")
+            {
+                respond("Ok... Your calculator should have appeared on the left!");
+                navWindow = window.open("calculator.html", "mywindow", "location=1,status=1,scrollbars=1,width=400,height=600");
+                //testwindow.moveTo(0, 0);
+            }
+            else if(spokenResponse === "home")
+            {
+                respond("Ok... i'm taking you to our main website!");
+                if(navWindow)
+                    navWindow.location.href = 'index.html';
+                else
+                    navWindow = window.open("index.html", "mywindow", "location=1,status=1,scrollbars=1,width=800,height=600");
+                $(navWindow).focus();
+            }
+            else if(spokenResponse === "sparkcare")
+            {
+                respond("Ok... i'm displaying our Cumulus Care page where you have two options to contact us!, you should see two blue icons in the bottom right hand side. One is for chat and one is to make a call");
+                if(navWindow)
+                {
+                    sparkCareWindow = navWindow.location.href = 'sparkcare.html';
+                }
+                else
+                {
+                    sparkCareWindow = window.open("sparkcare.html", "mywindow", "location=1,status=1,scrollbars=1,width=800,height=600");
+                }
+                $(sparkCareWindow).focus();
+            }
+            else
+            {
+                temp['Inbound' + ' Bot' + botIndex++] = spokenResponse;
+                myTranscript.push(temp);
+                alert("Inbound Bot: " + myTranscript[0]['Inbound Bot' + botIndex-1]);
+                respond(spokenResponse);
+                
+                //debugRespond(debugJSON);
+            }
+        }
+        function debugRespond(val) {
+            $("#response").text(val);
+        }
+        function setResponse(val) {
+                $("#response").text(val);
+        }
+        function respond(val) {
+            if (val == "") {
+              val = messageSorry;
+            }
+            var elem = document.getElementById('messages');
+            elem.scrollTop = elem.scrollHeight;
+            if (val !== messageRecording) {
+              var msg = new SpeechSynthesisUtterance();
+              var voices = window.speechSynthesis.getVoices();
+              msg.voiceURI = "native";
+              msg.text = val;
+              msg.lang = "en-US";
+              window.speechSynthesis.speak(msg);
+            }
+            //alert("Text: " + val);
+            $('#messages ul').append( '<li><span class="left">' + val + '</span><div class="clear"></div></li>');
+            //$('#messages ul').append( '</span><div class="clear"></div></li>' );
+            //$("#response").text(val);
+            //$("#spokenResponse").addClass("is-active").find(".spoken-response__text").html(val);
+        }
+        // Setting up ECE to start a Chat session
+        function escalateIt()
+        {
+            /* Create the customer object */
+            InChat = true;
+            var customerObject =  new myLibrary.Datatype.CustomerObject();
+            customerObject.SetPrimaryKey(customerObject.PrimaryKeyParams.PRIMARY_KEY_EMAIL,EmailAddress);
+            
+
+            var customerFirstName = new myLibrary.Datatype.CustomerParameter();
+            customerFirstName.eGainParentObject = "casemgmt";
+            customerFirstName.eGainChildObject = "individual_customer_data";
+            customerFirstName.eGainAttribute = "first_name";
+            customerFirstName.eGainValue = FirstName;
+            customerFirstName.eGainParamName = "first_name";
+            customerFirstName.eGainMinLength = "1";
+            customerFirstName.eGainMaxLength = "50";
+            customerFirstName.eGainRequired = "1";
+            customerFirstName.eGainFieldType = "1";
+            customerFirstName.eGainPrimaryKey = "0";
+            customerFirstName.eGainValidationString = "";
+            customerObject.AddCustomerParameter(customerFirstName);
+
+            var customerLastName = new myLibrary.Datatype.CustomerParameter();
+            customerLastName.eGainParentObject = "casemgmt";
+            customerLastName.eGainChildObject = "individual_customer_data";
+            customerLastName.eGainAttribute = "last_name";
+            customerLastName.eGainValue = LastName;      
+            customerLastName.eGainParamName = "last_name";
+            customerLastName.eGainMinLength = "1";
+            customerLastName.eGainMaxLength = "50";
+            customerLastName.eGainRequired = "1";
+            customerLastName.eGainFieldType = "1";
+            customerLastName.eGainPrimaryKey = "0";
+            customerLastName.eGainValidationString = "";
+            customerObject.AddCustomerParameter(customerLastName);
+
+            var customerEmail = new myLibrary.Datatype.CustomerParameter();
+            customerEmail.eGainParentObject = "casemgmt";
+            customerEmail.eGainChildObject = "email_address_contact_point_data";
+            customerEmail.eGainAttribute = "email_address";
+            customerEmail.eGainValue = EmailAddress;      
+            customerEmail.eGainParamName = "email_address";
+            customerEmail.eGainMinLength = "1";
+            customerEmail.eGainMaxLength = "50";
+            customerEmail.eGainRequired = "1";
+            customerEmail.eGainFieldType = "1";
+            customerEmail.eGainPrimaryKey = "1";
+            customerEmail.eGainValidationString = "";
+            customerObject.AddCustomerParameter(customerEmail);
+
+            /* Now call the Chat initiliaztion method with your entry point and callbacks */
+            myChat.Initialize(ChatEntryPointId,'en', 'US', myEventHandlers, 'aqua', 'v11');
+            /*Now set the customer */
+            myLibrary.SetCustomer(customerObject);
+            myChat.Start();
+
+            //$.mobile.changePage("#WithParametersChatInteractionScreen");
+    
+        }
+	</script>
+        
+    </head>
+    <body>
+        <div class="chat-box">
+            <div class="header">
+                <img src="images/logo.jpg" height="40">
+                <img id="rec" src="images/microphone_green.png" height="40" align="right">
+            </div>
+            <div id="messages" class="messages">
+                <ul>
+                    
+                </ul>
+                <div class="clear"></div>
+            </div>
+           
+            <div class="input-box">
+                <textarea id="input" placeholder="Enter message"></textarea>
+            </div>
+        </div>
+        <script>
+            switchRecognition();
+            setInput("Sparky");
+            stopRecognition();
+        </script>
+    </body>
+</html>
