@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<!--
+This library of examples demonstrates the use of the eGain Chat JavaScript Library
+-->
+<html>
+    <head>
+        <title>Simple Anonymous Chat</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../../libs/jquery-mobile/jquery.mobile-1.4.5.min.css" rel="stylesheet" type="text/css"/>
+        <script src="../../libs/jquery/jquery-2.1.3.min.js" type="text/javascript"></script>
+        <script src="../../libs/jquery-mobile/jquery.mobile-1.4.5.min.js" type="text/javascript"></script>        
+        <script src="../../libs/egain/egain-client-library.0.0.25.min.js" type="text/javascript"></script>
+        <script src="../../libs/jquery-cookie/jquery.cookie.js" type="text/javascript"></script>
+        <script src="chat-attachments.js" type="text/javascript"></script>        
+    </head>
+    <body>
+        <div id="SimpleAnonymousChat" data-role="page">
+            <div data-role="header">
+                <a href="../../index.html" data-role="button" rel="external">Home</a>
+                <h1>Chat and Callback JavaScript SDK</h1>
+            </div>
+            <div data-role="content">
+                <h1>Anonymous Chat</h1>
+                <p>This example demonstrates a quick and easy way to send and receive attachments.</p>
+                <p>Current CORS Host: <span class="CurrentCorsHost"></span></p>
+                <br />
+                <label for="ChatEntryPointId">Chat Entry Point Id:</label>
+                <input id="ChatEntryPointId" name="ChatEntryPointId" type="text" placeholder="Chat Entry Point Id (e.g. 1000)" />
+                <a id="StartAnonymousChatButton" href="#" data-role="button">Start Anonymous Chat</a>
+            </div>
+            
+        </div>
+        <div id="SimpleAnonymousChatInteractionScreen" data-role="page">
+            <div data-role="header">                
+                <h1>Chat JavaScript SDK</h1>
+                <button id="EndChat" class="ui-btn-right">Close</button>
+            </div>
+            <div data-role="content">
+                <div id="TransScript"></div>
+            </div>
+            <div data-role="footer" style="padding:30px;" data-position="fixed">
+				Chat attachments
+				<div class="ui-grid-a">
+                    <div class="ui-block-a" style="width:80%;">
+                        <input style="width:70%;" type="file" id="Attachment" class="ui-btn"></input>
+                    </div>
+                    <div class="ui-block-b" style="width:20%;">
+						<button id="SendAttachment" class="ui-btn">Send File</button>
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <div id="SimpleAnonymousChatPostChatScreen" data-role="page">
+            <div data-role="header">                
+                <h1>Chat JavaScript SDK</h1>
+                <a href="../../index.html" class="ui-btn-right" data-role="button">Samples</a>
+            </div>
+            <div data-role="content">
+                <p>Thank you for using chat</p>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                <h1>&COPY;2017 eGain Communications</h1>
+            </div>
+        </div>            
+    </body>
+</html>

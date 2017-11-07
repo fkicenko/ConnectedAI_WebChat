@@ -6,7 +6,7 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width">
 
-	    <link rel="icon" href="images/favicon.png" type="image/png"/>
+	<link rel="icon" href="images/favicon.png" type="image/png"/>
     	<link rel="shortcut icon" href="images/favicon.png" type="image/png"/>
 
         <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -17,12 +17,16 @@
         <link rel="stylesheet" href="css/templatemo_misc.css">
         <link rel="stylesheet" href="css/flexslider.css">
         <link rel="stylesheet" href="css/testimonails-slider.css">
+        <link rel="stylesheet" href="css/bot.css">
         <script src="js/jquery/jquery-2.1.3.min.js" type="text/javascript"></script>
         <script src="js/vendor/modernizr-2.6.1-respond-1.1.0.min.js"></script>
-		<script>
-		// Insert your Chat/Callback Template Here
-                window.open("floatbot.html", "Bot", 'titlebar=no,location=0,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=320,height=580');
-		</script>
+        <script>
+            height=5;
+            width=5;
+            t=window.innerHeight-height;
+            l=window.innerWidth-width;
+            window.open("floatbot.html", "Bot", 'titlebar=no,location=0,toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,width=320,height=580,left='+l+', top='+t);
+        </script>
 	</head>
 
     <body>
