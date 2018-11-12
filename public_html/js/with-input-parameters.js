@@ -1,12 +1,12 @@
 /* Create a new instance of the eGainLibrarySettings Object */
 var myLibrarySettings = new eGainLibrarySettings();
-myLibrarySettings.CORSHost = "https://eceweb.cc.com/system";
+myLibrarySettings.CORSHost = "https://yourecewebserver/system";
 myLibrarySettings.IsDevelopmentModeOn = false;
 myLibrarySettings.eGainContextPath = "./";
 /* Next create a new instance of the eGainLibrary */
 /* passing in the settings you have just created. */
 var myLibrary = new eGainLibrary(myLibrarySettings);
-myLibrary.CORSHost = "https://eceweb.cc.com/system";
+myLibrary.CORSHost = "https://yourecewebserver/system";
 var myTranscript = [];
 var chatIndex = 0;
 var botIndex = 0;
