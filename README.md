@@ -12,7 +12,7 @@ which facilitates the customer dialog and then transfers the chat to a contact c
 - > Remote Expert Mobile version 11.6
 
 This project includes a sample website and all of the javascript that is needed. This sample should run on any webserver.
-
+![Webchat Architecture](public_html/images/ReadmePics/webchat_architecture.png)
 >  Configuration Required
 
 Within the core Bot which is primarily written in the 'floatbot.html' file, you will need to configure the DialogFlow
@@ -27,7 +27,10 @@ your ECE system is configured for.
 
 - [ ] var ChatEntryPointId = "1001";
 
+If you don't know your configured Chat Entry point within ECE, you can log into the ECE system as an Administrator
+and navigate to the Department->Service->Chat-Entry Point configuration as shown below to locate the Entry Point.
 
+![Chat Entrypoint](public_html/images/ReadmePics/chat_entrypoint.png)
 Next configuration task will be the customers info gatered from your authentication mechanism;
 
 - [ ] var PhoneNumber = "";
@@ -44,10 +47,16 @@ At the top of the file you will need to configure the base URL for your ECE Web 
 - [ ] myLibrarySettings.CORSHost = "https://yourecewebserver/system";
 - [ ] myLibrary.CORSHost = "https://yourecewebserver/system";
 
+If you will be allowing the sending of attachments to the agent, you will need to configure ECE to allow attachments.
+Again, within the ECE Administration, you will need to navigate to the Workflow->Queues and select the Chat Queue you
+will be using and enable the sending of attachments as shown below;
+![Chat Attachment](public_html/images/ReadmePics/chat_attachment.png)
 > Note: There are some configurations and functions within here for the handling of transcripts of the conversation 
 > between the customer and the Bot. Within this sample, we use Cisco Context Service for storing the transcripts. If
 > you are using another method or not saving the transcript, you can ignore these sections.
 
-
+You should now be setup for testing. This guide assumes that you have already setup DialogFlow for this implementation. 
+If you havn't, you can get started at the following URL.
+https://dialogflow.com/docs/getting-started
 
 
