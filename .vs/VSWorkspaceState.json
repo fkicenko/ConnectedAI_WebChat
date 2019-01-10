@@ -2,7 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\public_html",
+    "\\public_html\\images",
+    "\\public_html\\images\\ReadmePics",
     "\\public_html\\js"
   ],
+  "SelectedNode": "\\public_html\\js\\with-input-parameters.js",
   "PreviewInSolutionExplorer": false
 }
